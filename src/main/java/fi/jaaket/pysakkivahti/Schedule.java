@@ -1,14 +1,14 @@
 package fi.jaaket.pysakkivahti;
 
 import java.time.ZonedDateTime;
-import java.util.Collection;
+import java.util.List;
 
 public class Schedule {
     private String stopName;
     private String lineName;
-    private Collection<ZonedDateTime> arrivalTimes;
+    private List<ZonedDateTime> arrivalTimes;
 
-    public Schedule(String stopName, String lineName, Collection<ZonedDateTime> arrivalTimes) {
+    public Schedule(String stopName, String lineName, List<ZonedDateTime> arrivalTimes) {
         this.stopName = stopName;
         this.lineName = lineName;
         this.arrivalTimes = arrivalTimes;
@@ -22,7 +22,7 @@ public class Schedule {
         return lineName;
     }
 
-    public Collection<ZonedDateTime> getArrivalTimes() {
+    public List<ZonedDateTime> getArrivalTimes() {
         return arrivalTimes;
     }
 }

@@ -29,7 +29,7 @@ GTFS_ZIP_PATH=/home/example/hsl.zip java -jar target/pysakkivahti-VERSION.jar
 
 ## TODO
 
-* Inputs for stop and route ids
+* Only show N upcoming
 * Search stops
 * Search routes
 * Display realtime info about vehicles on specified route
