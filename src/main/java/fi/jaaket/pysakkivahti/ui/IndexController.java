@@ -6,35 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class IndexController {
     @Autowired
     private ScheduleRepository scheduleRepository;
-    private static ZoneId ZONE_ID = ZoneId.of("Europe/Helsinki");
-    private static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(
+            @RequestParam(value = "stopId", required = false, defaultValue = "5010554") String stopId,
+            @RequestParam(value = "routeId", required = false, defaultValue = "3001R") String routeId,
+            Model model
+    ) {
         LocalDate now = LocalDate.now();
-        Schedule schedule = scheduleRepository.getForLineAndStopOnDate("3001R", "5010554", now);
-        model.addAttribute("stopName", schedule.getStopName());
-        model.addAttribute("lineName", schedule.getLineName());
-        model.addAttribute("scheduleLines", makeScheduleLines(schedule));
+        Schedule schedule = scheduleRepository.getForLineAndStopOnDate(routeId, stopId, now);
+        ScheduleViewModel scheduleViewModel =
+                schedule != null ? new ScheduleViewModel(schedule) : null;
+        model.addAttribute("schedule", scheduleViewModel);
         return "index";
-    }
-
-    private List<ScheduleLine> makeScheduleLines(Schedule schedule) {
-        ZonedDateTime now = ZonedDateTime.now(ZONE_ID);
-        return schedule.getArrivalTimes().stream().map((arrivalTime) ->
-            new ScheduleLine(arrivalTime.format(timeFormatter), arrivalTime.isAfter(now))
-        ).collect(Collectors.toList());
     }
 }

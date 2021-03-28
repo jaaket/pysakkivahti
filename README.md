@@ -34,3 +34,4 @@ GTFS_ZIP_PATH=/home/example/hsl.zip java -jar target/pysakkivahti-VERSION.jar
 * Search routes
 * Display realtime info about vehicles on specified route
 * Use a real database to load GTFS data into to speed up startup
+* Don't return stack trace on server error

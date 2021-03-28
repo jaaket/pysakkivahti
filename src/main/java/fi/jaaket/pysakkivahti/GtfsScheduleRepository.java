@@ -35,7 +35,13 @@ public class GtfsScheduleRepository implements ScheduleRepository {
     @Override
     public Schedule getForLineAndStopOnDate(String lineId, String stopId, LocalDate date) {
         Stop stop = store.getStopForId(new AgencyAndId("HSL", stopId));
+        if (stop == null) {
+            return null;
+        }
         Route route = store.getRouteForId(new AgencyAndId("HSL", lineId));
+        if (route == null) {
+            return null;
+        }
 
         List<ZonedDateTime> arrivalTimes = store.getStopTimesForStop(stop).stream().filter((stopTime) -> {
             Trip trip = stopTime.getTrip();

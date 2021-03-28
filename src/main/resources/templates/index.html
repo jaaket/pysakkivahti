@@ -6,20 +6,27 @@
     <link href="index.css" rel="stylesheet" />
 </head>
 <body>
-    <h1 th:text="${stopName}">Stop Name</h1>
-    <h2 th:text="${lineName}">Line Name</h2>
-    <table>
+    <h1 th:if="${schedule}" th:text="${schedule.stopName}">Stop Name</h1>
+    <h2 th:if="${schedule}"th:text="${schedule.lineName}">Line Name</h2>
+    <table th:if="${schedule}">
         <thead>
             <tr>Arrival time</tr>
         </thead>
         <tbody>
-            <tr th:if="${scheduleLines.empty}">
+            <tr th:if="${schedule.scheduleLines.empty}">
                 <td>No schedule lines</td>
             </tr>
-            <tr th:each="line : ${scheduleLines}" th:class="schedule-line" th:classappend="${line.isHighlighted} ? 'highlight' : ''">
+            <tr th:each="line : ${schedule.scheduleLines}" th:class="schedule-line" th:classappend="${line.isHighlighted} ? 'highlight' : ''">
                 <td th:text="${line.arrivalTime}">Arrival Time</td>
             </tr>
         </tbody>
     </table>
+    <form action="">
+        <label for="stopId">Stop ID</label>
+        <input type="text" id="stopId" th:name="stopId"/>
+        <label for="routeId">Route ID</label>
+        <input type="text" id="routeId" th:name="routeId"/>
+        <input type="submit" value="Submit" />
+    </form>
 </body>
 </html>
