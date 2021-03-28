@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pysäkkivahti</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="index.css" rel="stylesheet" />
+</head>
+<body>
+    <h1 th:text="${stopName}">Stop Name</h1>
+    <h2 th:text="${lineName}">Line Name</h2>
+    <table>
+        <thead>
+            <tr>Arrival time</tr>
+        </thead>
+        <tbody>
+            <tr th:if="${scheduleLines.empty}">
+                <td>No schedule lines</td>
+            </tr>
+            <tr th:each="line : ${scheduleLines}" th:class="schedule-line" th:classappend="${line.isHighlighted} ? 'highlight' : ''">
+                <td th:text="${line.arrivalTime}">Arrival Time</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
